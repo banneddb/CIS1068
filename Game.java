@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
     static Scanner console = new Scanner(System.in);
@@ -13,7 +13,20 @@ public class Game {
         System.out.println(Rules(args));
         if (Start(args).equals("y")) {
             System.out.println("Starting game.");
-            Winner(args);      
+            int[] results = {0,0,0};
+            Winner(args, results);
+            String continueGame = Redo();
+            while(continueGame.equalsIgnoreCase("y")) {
+                System.out.println("Continuing game.");
+                Winner(args,results );
+                continueGame = Redo();
+            }
+            if (continueGame.equalsIgnoreCase("n")) {
+                System.out.println("Game has ended. Fetching results.");
+                System.out.println("You won "+ results[0]+" times");
+                System.out.println("The computer won "+ results[1]+" times");
+                System.out.println("There was a total of "+ results[2]+" rounds played");
+            }
         } 
             else {
             System.out.println("Quitting game.");
@@ -93,11 +106,64 @@ public class Game {
                  }
         return computerMove;
                 }
-    public static void Winner(String[] args) {
+    public static int[] Winner(String[] args, int[] results) {
         int playerMove = PlayerMove(args);
         int computerMove = ComputerMove(args);
-        System.out.println("Player Move" + playerMove);
-        System.out.println("Computer Move" + computerMove);
-        
+        if (playerMove==REVSKAR && (computerMove == UTLANGEN || computerMove == KLOVEN)) {
+            System.out.println("The player has won this round by moving REVSKAR!");
+            results[0] += 1;
+        }
+        else if (playerMove == UTLANGEN && (computerMove == ALTAPPEN || computerMove == BEGRIPA)) {
+            System.out.println("The player has won this round by moving UTLANGEN!");
+            results[0] += 1;
+        }
+        else if (playerMove == ALTAPPEN && (computerMove == REVSKAR || computerMove == KLOVEN )) {
+            System.out.println("The player has won this round by moving ALTAPPEN!");
+            results[0] += 1;
+        }
+        else if (playerMove == KLOVEN && (computerMove == BEGRIPA || computerMove == UTLANGEN)) {
+            System.out.println("The player has won this round by moving KLOVEN!");
+            results[0] += 1;
+        }
+        else if (playerMove == BEGRIPA && (computerMove == REVSKAR || computerMove == ALTAPPEN)) {
+            System.out.println("The player has won this round by moving BEGRIPA!");
+            results[0] += 1;
+        }
+        else if (computerMove==REVSKAR && (playerMove == UTLANGEN || playerMove == KLOVEN)) {
+            System.out.println("The computer has won this round by moving REVSKAR!");
+            results[1] += 1;
+        }
+        else if (computerMove == UTLANGEN && (playerMove == ALTAPPEN || playerMove == BEGRIPA)) {
+            System.out.println("The computer has won this round by moving UTLANGEN!");
+            results[1] += 1;
+        }
+        else if (computerMove == ALTAPPEN && (playerMove == REVSKAR || playerMove == KLOVEN)) {
+            System.out.println("The computer has won this round by moving ALTAPPEN!");
+            results[1] += 1;
+        }
+        else if (computerMove == KLOVEN && (playerMove == BEGRIPA || playerMove == UTLANGEN)) {
+            System.out.println("The computer has won this round by moving KLOVEN!");
+            results[1] += 1;
+        }
+        else if (computerMove == BEGRIPA && (playerMove == REVSKAR || playerMove == ALTAPPEN)) {
+            System.out.println("The computer has won this round by moving BEGRIPA!");
+            results[1] += 1;
+        }
+        else if (computerMove == playerMove) {
+            System.out.println("This round has ended in a tie. Point has been awarded to the computer.");
+            results[1] += 1;
+        }
+    console.nextLine();
+    results[2] += 1;
+    return results;
+    }
+    public static String Redo() {
+        System.out.println("Would you like to play another round? Please respond with 'y' or 'n'");
+        String nextRound = console.nextLine();
+        while (!nextRound.equalsIgnoreCase("y") && !nextRound.equalsIgnoreCase("n")) {
+            System.out.println("Invalid response! Please respond with 'y' or 'n'.");
+            nextRound = console.nextLine();
+        }
+        return nextRound;
     }
 }
