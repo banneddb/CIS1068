@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Random;
+
 public class Game {
     static Scanner console = new Scanner(System.in);
     // Global variables (these are allowed).
@@ -11,7 +13,7 @@ public class Game {
         System.out.println(Rules(args));
         if (Start(args).equals("y")) {
             System.out.println("Starting game.");
-            PlayerMove(args);        
+            Winner(args);      
         } 
             else {
             System.out.println("Quitting game.");
@@ -35,7 +37,16 @@ public class Game {
         System.out.println("It is your turn.");
         System.out.println("Type '1' for KLOVEN, '2' for ALTAPPEN, '3' for BEGRIPA, '4' for REVSKAR, '5' for UTLANGEN");
         System.out.println("What is your move?");
-        int playerMove = console.nextInt();
+        int playerMove = 0;
+        while (true) {
+                if (console.hasNextInt()) {
+                    playerMove = console.nextInt();
+                    break;
+                } else {
+                    System.out.println("That is not a valid number. Please type a number between 1-5.");
+                    console.next();
+                }
+        }
         while (playerMove < 1 || playerMove > 5) {
             System.out.println("Invalid number. Please pick 1,2,3,4 or 5.");
             System.out.println("What is your move?");
@@ -61,8 +72,32 @@ public class Game {
         return playerMove;
                 }
     public static int ComputerMove(String[] args) {
-        int randnum[] = {1,2,3,4,5};
+        Random random = new Random();
+        int computerMove = random.nextInt(1,6);
+        switch (computerMove) {
+            case 1:
+                System.out.println("The computer has moved 'KLOVEN' ");
+                break;
+            case 2:
+                System.out.println("The computer has moved 'ALTAPPEN' ");
+                break;
+            case 3:
+                System.out.println("The computer has moved 'BEGRIPA' ");
+                break;
+            case 4:
+                System.out.println("The computer has moved 'REVSKAR' ");
+                break;
+            case 5:
+                System.out.println("The computer has moved 'UTLANGEN' ");
+                break;                
+                 }
+        return computerMove;
+                }
+    public static void Winner(String[] args) {
+        int playerMove = PlayerMove(args);
+        int computerMove = ComputerMove(args);
+        System.out.println("Player Move" + playerMove);
+        System.out.println("Computer Move" + computerMove);
         
-
     }
 }
