@@ -61,7 +61,7 @@ public class Game {
                 }
         }
         while (playerMove < 1 || playerMove > 5) {
-            System.out.println("Invalid number. Please pick 1,2,3,4 or 5.");
+            System.out.println("That is not a valid number. Please type a number between 1-5");
             System.out.println("What is your move?");
             playerMove = console.nextInt();
         }
