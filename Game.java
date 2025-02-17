@@ -1,6 +1,9 @@
 import java.util.Random;
 import java.util.Scanner;
 
+// Behruz Omonullaev, Section 001, Assignment 4
+// The purpose of this assignment is to utilize the Scanner module to test user inputs and make a game and determine who win.
+
 public class Game {
     static Scanner console = new Scanner(System.in);
     // Global variables (these are allowed).
